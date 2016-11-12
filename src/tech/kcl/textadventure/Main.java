@@ -32,7 +32,6 @@ public class Main {
 		// Will repeat until the game has been stopped
 		while (running) {
 			commands.runNextCommand();
-			
 		}
 	}
 	

@@ -6,15 +6,9 @@ public class Dice {
 
 	private static Random rand = new Random();
 	
-	public int rollDiceSilent(int nSides) {
+	public int rollDice(int nSides) {
         return rand.nextInt(nSides)+1;
 	}
-	
-    public int rollDice(int nSides){ 
-    	int roll = rollDiceSilent(nSides);
-        System.out.println("Roll is:  "+roll);
-        return roll;
-    } 
 }
 /*
 Roll is:  4

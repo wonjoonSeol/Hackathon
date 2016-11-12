@@ -1,7 +1,5 @@
 package tech.kcl.textadventure;
 
-import java.util.Random;
-
 public class Entity {
 	private int hp;
 	private int stamina;
@@ -17,89 +15,59 @@ public class Entity {
 	this.block = block;
 	}
 
-	public void death(){
-		System.out.println("your hero has died");
-		System.out.println("Game over");
-	}
-	
+	//Character should always have attack > 6
 	public void playerAttack(Entity enemy, Dice dice, int sides){
-		int roll = dice.rollDiceSilent(3);
-		if (roll == 0){
+		int rollProb = dice.rollDice(3);
+		int rollStatModifier = dice.rollDice(sides);
+		if (rollProb == 0){
 			System.out.println("your character feels stronger");
-			int roll2 = dice.rollDice(sides);
-			enemy.decreaseHp(attack + roll2);
-		}else if (roll == 1 && attack > roll2){
+			System.out.println("Dice roll: " + rollStatModifier);
+			enemy.setHp(enemy.getHp() - (attack + rollStatModifier));
+		}else if (rollProb == 1 && attack > rollStatModifier){
 			System.out.println("your character feels weaker");
-			int roll2 = dice.rollDice(sides);
-			enemy.decreaseHp(attack - roll2); 
-			
+			System.out.println("Dice roll: " + rollStatModifier);
+			enemy.setHp(enemy.getHp() - (attack - rollStatModifier)); 			
 		}else{
-			enemy.decreaseHp(attack);
+			enemy.setHp(enemy.getHp() - attack);
 		}		
 	}
 
 	public void enemyAttack(Entity enemy, Dice dice, int sides){
-		int roll = dice.rollDiceSilent(3);
+		int rollProb = dice.rollDice(3);
+		int rollStatModifier = dice.rollDice(sides);
 		
-		if (roll == 0){
-			System.out.println("your character feels stronger");
-			int roll2 = dice.rollDice(sides);
-			if (enemy.getAttack() < roll2){
-				hp -= enemy.getAttack() - block - roll2;
-					if (hp <= 0){
-						death();
-					}
+		if (rollProb == 0){
+			if (enemy.getAttack() < rollStatModifier){
+				System.out.println("your character feels stronger");
+				System.out.println("Dice roll: " + rollStatModifier);
+				hp -= enemy.getAttack() - block - rollStatModifier;
 			}else{
 				hp -= enemy.getAttack() - block; 
 			}
-		}else if (roll == 1){
-			System.out.println("your character feels weaker")
-			int roll2 = dice.rollDice(sides);
-			hp -= enemy.getAttack() - block + dice.rollDice(sides)); 
-			if (hp <= 0){
-				death();
-			}
+		}else if (rollProb == 1){
+			System.out.println("your character feels weaker");
+			System.out.println("Dice roll: " + rollStatModifier);
+			hp -= enemy.getAttack() - block + rollStatModifier; 
 		}else{
 			hp -= enemy.getAttack() - block;
-			if (hp <= 0){
-				death();
-			}
+
 		}
 	}
-
-
-	public void moveLeft(){
-		System.out.println("your character moved to left room")
-		//add room object		
-	}
-
-	public void moveRight(){
-		System.out.println("your character moved to right room")		
-		//add room object
-	}
-	public void moveUp(){
-		System.out.println("your character moved to upper room")		
-		//add room object
-	}
 	
 	
-	public void decreaseHp(int num){
-		hp -= num;
+	//getters and setters
+	public void setHp(int hp) {
+		this.hp = hp;
 	}
 	
-	public void getStatus(){
-		System.out.println("your current hp: " + getHp());
-		System.out.println("your current stamina: " + getStamina());
-		System.out.println("your current inventory status: " + getInventory());
-		System.out.println("your current attack points: " + getInventory());
-		System.out.println("your current block points: " + getBlock());
-		System.out.println("Good luck hero, play safe.");
-	}
-
 	public int getHp() {
 		return hp;
 	}
 
+	public void setStamina(int stamina) {
+		this.stamina = stamina;
+	}
+	
 	public int getStamina() {
 		return stamina;
 	}
@@ -108,12 +76,18 @@ public class Entity {
 		return inventory;
 	}
 
+	public void setAttack(int attack) {
+		this.attack = attack;
+	}
 	public int getAttack() {
 		return attack;
 	}
 
-	public int getBlock() {
-		return block;
+	public void setBlock(int block){
+		this.block = block;	
 	}
 	
+	public int getBlock() {
+		return block;
+	}	
 }

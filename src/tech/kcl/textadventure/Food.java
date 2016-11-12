@@ -6,13 +6,13 @@ package tech.kcl.textadventure;
 public class Food extends Item implements Consumable {
 	private int hp;
 	private int stamina;
-
-	public Food(int hp, int stamina) {
+	
+	public Food(String name, int hp, int stamina) {
+		super(name);
 		this.hp = hp;
 		this.stamina = stamina;
-		
 	}
-
+	
 	public void setFood(int hp) {
 		this.hp = hp;
 	}

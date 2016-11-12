@@ -90,7 +90,13 @@ public class Commands {
 			System.out.println("There is an enemy called " + map.getCurrentRoomObject().getEntity().getName());
 		}
 		if (map.getCurrentRoomObject().getItem() != null) {
-			System.out.println("There is an item in the room");
+			String itemType = "";
+			if (map.getCurrentRoomObject() instanceof Potion) {
+				itemType = "a potion";
+			} else if (map.getCurrentRoomObject() instanceof Food) {
+				itemType = ((Food) map.getCurrentRoomObject()).getName();
+			}
+			System.out.println("You picked up a ");
 		}
 		if (map.getCurrentRoomObject().getEntity() == null && map.getCurrentRoomObject().getEntity() == null) {
 			System.out.println("The room is empty");

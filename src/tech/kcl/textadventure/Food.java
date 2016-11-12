@@ -5,12 +5,10 @@ package tech.kcl.textadventure;
 // can only set during construction
 public class Food extends Item implements Consumable {
 	private int hp;
-	private int stamina;
 	
-	public Food(String name, int hp, int stamina) {
+	public Food(String name, int hp) {
 		super(name);
 		this.hp = hp;
-		this.stamina = stamina;
 	}
 	
 	public void setFood(int hp) {
@@ -21,12 +19,7 @@ public class Food extends Item implements Consumable {
 		return hp;
 	}
 	
-	public int getStamina() {
-		return stamina;
-	}
-	
 	public void consume(Entity entity) {
 		entity.setHp(entity.getHp() + hp);
-		entity.setStamina(entity.getStamina() + stamina);
 	}
 }

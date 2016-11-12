@@ -91,7 +91,7 @@ public class Commands {
 		}
 		if (map.getCurrentRoomObject().getItem() != null) {
 			String itemType = "";
-			if (map.getCurrentRoomObject() instanceof Potion) {
+			if (map.getCurrentRoomObject().getItem() instanceof Potion) {
 				itemType = "a potion";
 			} else if (map.getCurrentRoomObject() instanceof Food) {
 				itemType = ((Food) map.getCurrentRoomObject()).getName();

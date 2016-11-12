@@ -2,14 +2,12 @@ package tech.kcl.textadventure;
 
 public class Potion extends Item implements Consumable {
 	private int hp;
-	private int stamina;
 	private int attack;
 	private int block;
 
-	public Potion(String name, int hp, int stamina, int attack, int block) {
+	public Potion(String name, int hp, int attack, int block) {
 		super(name);
 		this.hp = hp;
-		this.stamina = stamina;
 		this.attack = attack;
 		this.block = block;
 		
@@ -27,12 +25,7 @@ public class Potion extends Item implements Consumable {
 		return hp;
 	}
 	
-	public int getStamina() {
-		return stamina;
-	}
-	
 	public void consume(Entity entity) {
-		entity.setStamina(entity.getStamina() + stamina);
 		entity.setAttack(entity.getAttack() + attack);
 		entity.setBlock(entity.getBlock() + block);
 		entity.setHp(entity.getHp() + hp);

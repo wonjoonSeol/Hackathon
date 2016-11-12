@@ -2,17 +2,21 @@ package tech.kcl.textadventure;
 
 public class Entity {
 	private int hp;
-	private int stamina;
 	private Inventory inventory;
 	private int attack;
 	private int block;
+	private String name;
 	
-	public Entity(int hp, int stamina, Inventory inventory, int attack, int block){
+	public Entity(int hp, Inventory inventory, int attack, int block, String name){
 	this.hp = hp;
-	this.stamina = stamina;
 	this.inventory = inventory;
 	this.attack = attack;
 	this.block = block;
+	this.name = name;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 	public void playerAttack(Entity enemy, Dice dice){
@@ -61,14 +65,6 @@ public class Entity {
 	
 	public int getHp() {
 		return hp;
-	}
-
-	public void setStamina(int stamina) {
-		this.stamina = stamina;
-	}
-	
-	public int getStamina() {
-		return stamina;
 	}
 
 	public Inventory getInventory() {

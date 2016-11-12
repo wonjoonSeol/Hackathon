@@ -33,5 +33,17 @@ public class Room {
 		this.roomMessage = roomMessage;
 	}
 	
+	public String getDescription() {
+		return roomMessage;
+	}
+	
+	public Item getItem() {
+		return item;
+	}
+	
+	public Entity getEntity() {
+		return entity;
+	}
+	
 	
 }

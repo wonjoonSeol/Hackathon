@@ -100,6 +100,12 @@ public class Commands {
 		}
 	}
 	
+	public void help(String[] commandParts) {
+		if (commandParts.length == 1) {
+			System.out.println("The available commands are:\nGO direction - moves the player in that direction\nINVENTORY - outputs the contents of your inventory\nSEARCH - tells you about your surroundings\nATTACK - attacks the enemy if there is one\nBLOCK - blocks against the enemy attack\nUSE item - will use the item in your inventory");
+		}
+	}
+	
 	public void inventory() {
 		System.out.println("Your inventory contains: ");
 		String line = "";
@@ -124,6 +130,12 @@ public class Commands {
 			break;
 		case "search":
 			search();
+			break;
+		case "inventory":
+			inventory();
+			break;
+		case "help":
+			help(commandParts);
 			break;
 		case "attack":
 			break;

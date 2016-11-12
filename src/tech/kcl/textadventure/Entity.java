@@ -7,9 +7,9 @@ public class Entity {
 	private int block;
 	private String name;
 	
-	public Entity(int hp, Inventory inventory, int attack, int block, String name){
+	public Entity(int hp, int attack, int block, String name){
 	this.hp = hp;
-	this.inventory = inventory;
+	inventory = new Inventory();
 	this.attack = attack;
 	this.block = block;
 	this.name = name;

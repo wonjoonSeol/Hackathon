@@ -118,7 +118,7 @@ public class Commands {
 		case "search":
 			search();
 			break;
-		case "":
+		case "attack":
 			break;
 		default:
 			System.out.println("Sorry that command is invalid, please try again!");

@@ -100,10 +100,33 @@ public class Commands {
 		}
 	}
 	
-	public void help(String[] commandParts) {
-		if (commandParts.length == 1) {
-			System.out.println("The available commands are:\nGO direction - moves the player in that direction\nINVENTORY - outputs the contents of your inventory\nSEARCH - tells you about your surroundings\nATTACK - attacks the enemy if there is one\nBLOCK - blocks against the enemy attack\nUSE item - will use the item in your inventory");
+	public boolean use(String item) {
+		for (Item itemObj : player.getInventory().getItems()) {
+			if (itemObj.getName().equalsIgnoreCase(item)) {
+				if (itemObj instanceof Consumable) {
+					((Consumable) itemObj).consume(player);
+					System.out.println("You just consumed " + item);
+					return true;
+				} else {
+					System.out.println("Sorry you cannot consume " + item);
+					return true;
+				}
+			}
 		}
+		System.out.println("Sorry you do not own an object called " + item);
+		return false;
+	}
+	
+	public void attack() {
+		Dice dice = new Dice();
+		if (fighting) {
+			map.getCurrentRoomObject().getEntity().playerAttack(map.getCurrentRoomObject().getEntity(), dice);
+			map.getCurrentRoomObject().getEntity().enemyAttack(map.getCurrentRoomObject().getEntity(), dice);
+		}
+	}
+	
+	public void help() {
+		System.out.println("The available commands are:\nGO direction - moves the player in that direction\nINVENTORY - outputs the contents of your inventory\nSEARCH - tells you about your surroundings\nATTACK - attacks the enemy if there is one\nBLOCK - blocks against the enemy attack\nUSE item - will use the item in your inventory");
 	}
 	
 	public void inventory() {
@@ -135,10 +158,14 @@ public class Commands {
 			inventory();
 			break;
 		case "help":
-			help(commandParts);
+			help();
 			break;
 		case "attack":
+			attack();
 			break;
+		case "use":
+			if (commandParts.length == 1) help();
+			else use(commandParts[1]);
 		default:
 			System.out.println("Sorry that command is invalid, please try again!");
 			runNextCommand();

@@ -12,7 +12,8 @@ public class Commands {
 
 	public Commands(Main main) {
 		this.main = main;
-		player = new Entity(100, 50, new Inventory(), 5, 10);
+		player = new Entity(100, 5, 10, "Jose");
+		player.getInventory().addItemToInventory(new Weapon("Rolling Pin", 10));
 		map = new Level1();
 		scanner = new Scanner(System.in);
 	}
@@ -48,10 +49,6 @@ public class Commands {
 			if (map.getRoom(loc[0], loc[1] + 1) == null)
 				return false;
 			map.move(0, 1);
-		} else if (commandParts[1] == "up") {
-
-		} else if (commandParts[1] == "down") {
-
 		}
 
 		int[] newLoc = map.getCurrentRoom();
@@ -85,7 +82,7 @@ public class Commands {
 	}
 
 	public void search() {
-		System.out.println(map.getCurrentRoomObject().getDescription());
+		System.out.println("You are now entering the " + map.getCurrentRoomObject().getDescription());
 		if (map.getCurrentRoomObject().getEntity() != null) {
 			System.out.println("There is an enemy called " + map.getCurrentRoomObject().getEntity().getName());
 		}
@@ -93,14 +90,24 @@ public class Commands {
 			String itemType = "";
 			if (map.getCurrentRoomObject().getItem() instanceof Potion) {
 				itemType = "a potion";
-			} else if (map.getCurrentRoomObject() instanceof Food) {
-				itemType = ((Food) map.getCurrentRoomObject()).getName();
+			} else if (map.getCurrentRoomObject().getItem() instanceof Food) {
+				itemType = ((Food) map.getCurrentRoomObject().getItem()).getName();
 			}
-			System.out.println("You picked up a ");
+			System.out.println("You picked up " + itemType + " " + map.getCurrentRoomObject().getItem().getName());
 		}
 		if (map.getCurrentRoomObject().getEntity() == null && map.getCurrentRoomObject().getEntity() == null) {
 			System.out.println("The room is empty");
 		}
+	}
+	
+	public void inventory() {
+		System.out.println("Your inventory contains: ");
+		String line = "";
+		for (Item item : player.getInventory().getItems()) {
+			line += item.getName() + ", ";
+		}
+		line = line.substring(0, line.length() - 2);
+		System.out.println(line);
 	}
 	
 	public void runNextCommand() {

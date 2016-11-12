@@ -6,7 +6,8 @@ public class Potion extends Item implements Consumable {
 	private int attack;
 	private int block;
 
-	public Potion(int hp, int stamina, int attack, int block) {
+	public Potion(String name, int hp, int stamina, int attack, int block) {
+		super(name);
 		this.hp = hp;
 		this.stamina = stamina;
 		this.attack = attack;

@@ -3,7 +3,7 @@ package tech.kcl.textadventure;
 
 // food extends the items class, only has getters
 // can only set during construction
-public class Food extends Item {
+public class Food extends Item implements Consumable {
 	private int hp;
 	private int stamina;
 
@@ -23,5 +23,10 @@ public class Food extends Item {
 	
 	public int getStamina() {
 		return stamina;
+	}
+	
+	public void consume(Entity entity) {
+		entity.setHp(entity.getHp() + hp);
+		entity.setStamina(entity.getStamina() + stamina);
 	}
 }

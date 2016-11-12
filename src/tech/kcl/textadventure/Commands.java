@@ -84,6 +84,19 @@ public class Commands {
 		return true;
 	}
 
+	public void search() {
+		System.out.println(map.getCurrentRoomObject().getDescription());
+		if (map.getCurrentRoomObject().getEntity() != null) {
+			System.out.println("There is an enemy called " + map.getCurrentRoomObject().getEntity().getName());
+		}
+		if (map.getCurrentRoomObject().getItem() != null) {
+			System.out.println("There is an item in the room");
+		}
+		if (map.getCurrentRoomObject().getEntity() == null && map.getCurrentRoomObject().getEntity() == null) {
+			System.out.println("The room is empty");
+		}
+	}
+	
 	public void runNextCommand() {
 		System.out.println("> ");
 		String command = scanner.next().toLowerCase();
@@ -97,7 +110,9 @@ public class Commands {
 				System.out.println("Sorry you can't go " + commandParts[1]);
 			break;
 		case "search":
-			
+			search();
+			break;
+		case "":
 			break;
 		default:
 			System.out.println("Sorry that command is invalid, please try again!");

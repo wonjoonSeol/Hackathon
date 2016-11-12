@@ -1,3 +1,5 @@
+package tech.kcl.textadventure;
+
 import java.util.Random;
 
 public class Entity {
@@ -7,7 +9,7 @@ public class Entity {
 	private int attack;
 	private int block;
 	
-	public Entity(int hp, int block, int stamina, Inventory inventory, int attack, int block){
+	public Entity(int hp, int stamina, Inventory inventory, int attack, int block){
 	this.hp = hp;
 	this.stamina = stamina;
 	this.inventory = inventory;
@@ -15,38 +17,47 @@ public class Entity {
 	this.block = block;
 	}
 
-	public attack(Entity enemy, Dice dice, int sides){
-		int roll = 0;
-		roll = r.nextInt(3);
-		
-		if (roll = 0){
+	public void death(){
+		System.out.println("your hero has died");
+		System.out.println("Game over");
+	}
+	
+	public void playerAttack(Entity enemy, Dice dice, int sides){
+		int roll = dice.rollDiceSilent(3);
+		if (roll == 0){
 			System.out.println("your character feels stronger");
-			enemy.decreaseHP(attack) + dice.rollDice(sides);
-		}else if (roll = 1){
-			System.out.println("your character feels weaker")
-			enemy.decreaseHP(attack- dice.rollDice(sides)); 
+			int roll2 = dice.rollDice(sides);
+			enemy.decreaseHp(attack + roll2);
+		}else if (roll == 1 && attack > roll2){
+			System.out.println("your character feels weaker");
+			int roll2 = dice.rollDice(sides);
+			enemy.decreaseHp(attack - roll2); 
+			
 		}else{
-			enemy.deceraseeHP(attack);
+			enemy.decreaseHp(attack);
 		}		
 	}
 
-	public block(Entity enemy){
-		int roll = 0;
-		roll = r.nextInt(3);
+	public void enemyAttack(Entity enemy, Dice dice, int sides){
+		int roll = dice.rollDiceSilent(3);
 		
-		if (roll = 0){
+		if (roll == 0){
 			System.out.println("your character feels stronger");
-			roll = dice.rollDice(sides);
-			if (enemy.getStrength() < roll){
-				hp -= enemy.getStrength() - roll;
+			int roll2 = dice.rollDice(sides);
+			if (enemy.getStrength() < roll2){
+				hp -= enemy.getStrength() - block - roll2;
+					if (hp <= 0){
+						death();
+					}
 			}else{
-				hp -= enemy.getStrength(); 
+				hp -= enemy.getStrength() - block; 
 			}
-		}else if (roll = 1){
+		}else if (roll == 1){
 			System.out.println("your character feels weaker")
-			enemy.decreaseHP(block - dice.rollDice(sides)); 
+			int roll2 = dice.rollDice(sides);
+			hp -= enemy.getStrength() - block + dice.rollDice(sides)); 
 		}else{
-			enemy.decreaseHP(block);
+			hp -= enemy.getStrength() - block;
 		}
 	}
 
@@ -69,20 +80,38 @@ public class Entity {
 		//add room object
 	}
 	
-	public int getStrength(){
-		return strength;
+	
+	public void decreaseHp(int num){
+		hp -= num;
 	}
-	public int getBlock(){
-		return strength;
+	
+	public void getStatus(){
+		System.out.println("your current hp: " + getHp());
+		System.out.println("your current stamina: " + getStamina());
+		System.out.println("your current inventory status: " + getInventory());
+		System.out.println("your current attack points: " + getInventory());
+		System.out.println("your current block points: " + getBlock());
+		System.out.println("Good luck hero, play safe.")
 	}
-	public int getStrength(){
-		return strength;
+
+	public int getHp() {
+		return hp;
 	}
-	public int getStrength(){
-		return strength;
+
+	public int getStamina() {
+		return stamina;
 	}
-	public int getStrength(){
-		return strength;
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public int getAttack() {
+		return attack;
+	}
+
+	public int getBlock() {
+		return block;
 	}
 	
 }

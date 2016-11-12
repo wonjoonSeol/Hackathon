@@ -1,14 +1,19 @@
+package tech.kcl.textadventure;
+
 import java.util.Random;
 
 public class Dice {
 
+	private static Random rand = new Random();
+	
+	public int rollDiceSilent(int nSides) {
+        return rand.nextInt(nSides)+1;
+	}
+	
     public int rollDice(int nSides){ 
-    	int roll = 0;
-        Random  r = new Random(); 
-        
-        roll = r.nextInt(nSides)+1;
+    	int roll = rollDiceSilent(nSides);
         System.out.println("Roll is:  "+roll);
-      	return roll;
+        return roll;
     } 
 }
 /*

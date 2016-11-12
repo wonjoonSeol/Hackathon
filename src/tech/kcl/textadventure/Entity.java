@@ -44,27 +44,29 @@ public class Entity {
 		if (roll == 0){
 			System.out.println("your character feels stronger");
 			int roll2 = dice.rollDice(sides);
-			if (enemy.getStrength() < roll2){
-				hp -= enemy.getStrength() - block - roll2;
+			if (enemy.getAttack() < roll2){
+				hp -= enemy.getAttack() - block - roll2;
 					if (hp <= 0){
 						death();
 					}
 			}else{
-				hp -= enemy.getStrength() - block; 
+				hp -= enemy.getAttack() - block; 
 			}
 		}else if (roll == 1){
 			System.out.println("your character feels weaker")
 			int roll2 = dice.rollDice(sides);
-			hp -= enemy.getStrength() - block + dice.rollDice(sides)); 
+			hp -= enemy.getAttack() - block + dice.rollDice(sides)); 
+			if (hp <= 0){
+				death();
+			}
 		}else{
-			hp -= enemy.getStrength() - block;
+			hp -= enemy.getAttack() - block;
+			if (hp <= 0){
+				death();
+			}
 		}
 	}
 
-	public void consume(Potion potion){
-		System.out.println("your character feel refreshed")
-		hp += potion.getValue();
-	}
 
 	public void moveLeft(){
 		System.out.println("your character moved to left room")
@@ -91,7 +93,7 @@ public class Entity {
 		System.out.println("your current inventory status: " + getInventory());
 		System.out.println("your current attack points: " + getInventory());
 		System.out.println("your current block points: " + getBlock());
-		System.out.println("Good luck hero, play safe.")
+		System.out.println("Good luck hero, play safe.");
 	}
 
 	public int getHp() {

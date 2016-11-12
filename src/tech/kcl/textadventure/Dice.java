@@ -9,7 +9,6 @@ public class Dice {
         roll = r.nextInt(nSides)+1;
         System.out.println("Roll is:  "+roll);
       	return roll;
-
     } 
 }
 /*

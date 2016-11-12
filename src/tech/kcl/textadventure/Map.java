@@ -23,9 +23,5 @@ public class Map {
 	public Room getRoom(int x, int y) {
 		return rooms[x][y];
 	}
-	
-	public Room getCurrentRoomObject() {
-		return getRoom(x, y);
-	}
 
 }

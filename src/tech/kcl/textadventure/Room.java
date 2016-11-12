@@ -45,5 +45,13 @@ public class Room {
 		return entity;
 	}
 	
+	public void setItem(Item item) {
+		this.item = item;
+	}
+	
+	public void setEntity(Entity entity) {
+		this.entity = entity;
+	}
+	
 	
 }

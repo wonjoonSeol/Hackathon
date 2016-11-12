@@ -14,7 +14,11 @@ public class Inventory {
 		items.add(item);
 	}
 	
+	public void removeItemFromInventory(Item item) {
+		items.remove(item);
+	}
+	
 	public Item[] getItems() {
-		return (Item[]) items.toArray();
+		return items.toArray(new Item[] {});
 	}
 }

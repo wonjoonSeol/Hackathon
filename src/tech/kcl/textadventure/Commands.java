@@ -8,7 +8,7 @@ public class Commands {
 	private Map map;
 	private Entity player;
 	private Scanner scanner;
-	private boolean fighting;
+	private boolean fighting = true;
 
 	public Commands(Main main) {
 		this.main = main;
@@ -25,47 +25,52 @@ public class Commands {
 
 	public boolean go(String[] commandParts) {
 		int[] loc = map.getCurrentRoom();
-		if (commandParts[1] == "west") {
+		if (commandParts[1].equalsIgnoreCase("west")) {
 			if (loc[0] == 0)
 				return false;
 			if (map.getRoom(loc[0] - 1, loc[1]) == null)
 				return false;
 			map.move(-1, 0);
-		} else if (commandParts[1] == "east") {
+		} else if (commandParts[1].equalsIgnoreCase("east")) {
 			if (loc[0] == 9)
 				return false;
 			if (map.getRoom(loc[0] + 1, loc[1]) == null)
 				return false;
 			map.move(1, 0);
-		} else if (commandParts[1] == "north") {
+		} else if (commandParts[1].equalsIgnoreCase("north")) {
 			if (loc[1] == 0)
 				return false;
 			if (map.getRoom(loc[0], loc[1] - 1) == null)
 				return false;
 			map.move(0, -1);
-		} else if (commandParts[1] == "south") {
+		} else if (commandParts[1].equalsIgnoreCase("south")) {
 			if (loc[1] == 9)
 				return false;
 			if (map.getRoom(loc[0], loc[1] + 1) == null)
 				return false;
 			map.move(0, 1);
 		}
-
+		
+		if (loc[0] == map.getCurrentRoom()[0] && loc[1] == map.getCurrentRoom()[1]) {
+			System.out.println("You are staying in the same room");
+		} else {
+			System.out.println("You are now entering the " + map.getCurrentRoomObject().getDescription());
+		}
+		
 		int[] newLoc = map.getCurrentRoom();
 		boolean entityPresent = map.getRoom(newLoc[0], newLoc[1]).getEntity() != null;
 		
-		if (entityPresent) {
+		if (!fighting && entityPresent) {
 			int option = -1;
 			System.out.println("Oh noes! An enemy has appeared! Would you like to 1. fight or 2. flight? ");
 			option = scanner.nextInt();
 			while (!(option == 1 || option == 2)) {
 				System.out.println("Sorry that isn't an option, please enter a valid option: ");
 				option = scanner.nextInt();
+				scanner.nextLine();
 			}
 			fighting = option == 1;
-		}
-
-		if (!fighting && entityPresent) {
+			
 			System.out.println("So you want to run away? let's see about that...");
 			Dice dice = new Dice();
 			int roll = dice.rollDice(20);
@@ -76,6 +81,8 @@ public class Commands {
 				fighting = true;
 				System.out.println("Aww so unlucky! now you have to fight!");
 			}
+		} else if (fighting) {
+			System.out.println("Sorry you can't run away you are currently fighthing");
 		}
 		
 		return true;
@@ -93,7 +100,9 @@ public class Commands {
 			} else if (map.getCurrentRoomObject().getItem() instanceof Food) {
 				itemType = ((Food) map.getCurrentRoomObject().getItem()).getName();
 			}
-			System.out.println("You picked up " + itemType + " " + map.getCurrentRoomObject().getItem().getName());
+			System.out.println("You picked up " + itemType);
+			player.getInventory().addItemToInventory(map.getCurrentRoomObject().getItem());
+			map.getCurrentRoomObject().setItem(null);
 		}
 		if (map.getCurrentRoomObject().getEntity() == null && map.getCurrentRoomObject().getEntity() == null) {
 			System.out.println("The room is empty");
@@ -106,6 +115,7 @@ public class Commands {
 				if (itemObj instanceof Consumable) {
 					((Consumable) itemObj).consume(player);
 					System.out.println("You just consumed " + item);
+					player.getInventory().removeItemFromInventory(itemObj);
 					return true;
 				} else {
 					System.out.println("Sorry you cannot consume " + item);
@@ -122,6 +132,11 @@ public class Commands {
 		if (fighting) {
 			map.getCurrentRoomObject().getEntity().playerAttack(map.getCurrentRoomObject().getEntity(), dice);
 			map.getCurrentRoomObject().getEntity().enemyAttack(map.getCurrentRoomObject().getEntity(), dice);
+			if (map.getCurrentRoomObject().getEntity().getHp() < 0) {
+				System.out.println("Successfully killed " + map.getCurrentRoomObject().getEntity().getName());
+				fighting = false;
+				map.getCurrentRoomObject().setEntity(null);
+			}
 		}
 	}
 	
@@ -141,7 +156,7 @@ public class Commands {
 	
 	public void runNextCommand() {
 		System.out.println("> ");
-		String command = scanner.next().toLowerCase();
+		String command = scanner.nextLine().toLowerCase();
 
 		String[] commandParts = command.split(" ");
 
@@ -166,6 +181,7 @@ public class Commands {
 		case "use":
 			if (commandParts.length == 1) help();
 			else use(commandParts[1]);
+			break;
 		default:
 			System.out.println("Sorry that command is invalid, please try again!");
 			runNextCommand();

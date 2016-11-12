@@ -4,8 +4,6 @@ public class Entity {
 	private Inventory inventory;
 	private int attack;
 	private int block;
-
-	Random r = new Random();
 	
 	public Entity(int hp, int block, int stamina, Inventory inventory, int attack, int block){
 	this.hp = hp;

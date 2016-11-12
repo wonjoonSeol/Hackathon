@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Dice {
 
-    public static int rollDice(int nSides){ 
+    public int rollDice(int nSides){ 
     	int roll = 0;
         Random  r = new Random(); 
         

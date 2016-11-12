@@ -15,10 +15,10 @@ public class Entity {
 	this.block = block;
 	}
 
-	//Character should always have attack > 6
-	public void playerAttack(Entity enemy, Dice dice, int sides){
+	//Characters should always have attack > 6
+	public void playerAttack(Entity enemy, Dice dice){
 		int rollProb = dice.rollDice(3);
-		int rollStatModifier = dice.rollDice(sides);
+		int rollStatModifier = dice.rollDice(6);
 		if (rollProb == 0){
 			System.out.println("your character feels stronger");
 			System.out.println("Dice roll: " + rollStatModifier);
@@ -32,9 +32,10 @@ public class Entity {
 		}		
 	}
 
+	// base value should be always over 6
 	public void enemyAttack(Entity enemy, Dice dice, int sides){
 		int rollProb = dice.rollDice(3);
-		int rollStatModifier = dice.rollDice(sides);
+		int rollStatModifier = dice.rollDice(6);
 		
 		if (rollProb == 0){
 			if (enemy.getAttack() < rollStatModifier){

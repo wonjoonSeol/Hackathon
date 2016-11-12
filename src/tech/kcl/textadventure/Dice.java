@@ -8,7 +8,10 @@ public class Dice {
 	private static Random rand = new Random();
 	
 	public int rollDice(int nSides) {
-        return rand.nextInt(nSides)+1;
+		if (nSides == 0){
+			return 0;
+		}
+		return rand.nextInt(nSides)+1;
 	}
 	
 	public int getScale(){

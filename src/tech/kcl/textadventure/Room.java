@@ -10,14 +10,14 @@ public class Room {
 	private String roomMessage;
 	
 	public Room(Item item, Entity entity, String roomMessage) {
-		this.Item = item;
+		this.item = item;
 		this.entity = entity;
 		this.roomMessage = roomMessage;
 		
 	}
 	
 	public Room(Item item, String roomMessage) {
-		this.Item = item;
+		this.item = item;
 		this.roomMessage = roomMessage;
 		
 	}
